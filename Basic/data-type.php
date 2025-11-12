@@ -52,8 +52,31 @@ $score = 80.0; // float
 
 $langs = ['Banlga', 'English', 'Arabia', 'China'];
 
+/** Type Conversion */
+$str_price = "24905";
+$price = (int) $str_price;
+
+var_dump($price, );
 
 
-var_dump($langs);
+/** Different (&& vs and), (|| vs or) */
+echo "</br>";
+echo "</br>";
+
+$name = true;
+$email = false;
+
+// if ($name && $email) {
+//     echo "Both is true";
+// } else {
+//     echo "At least one is false";
+// }
+
+// $result = $name and $email;
+
+$role = $_GET['role'] ?? 'subscriber';
 
 
+
+
+var_dump($role);
