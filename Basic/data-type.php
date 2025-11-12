@@ -16,3 +16,32 @@ foreach($skills as $skill) {
 }
 
 // object
+class Person {
+    public $name;
+    public $email;    
+
+    function __construct($name, $email) {
+        $this-> name = $name;
+        $this-> email = $email;
+    }
+
+
+    function view() {
+        echo "My name is <b>$this->name </b> and email is <b> $this->email </b> ";
+    }
+
+    
+}
+
+    $person = new Person("Jakariya Ahmed", "jek@gmail.com");
+
+    $person->view();
+
+
+
+
+
+
+
+
+
