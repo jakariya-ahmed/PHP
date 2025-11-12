@@ -15,7 +15,7 @@ foreach($skills as $skill) {
     echo "<li style='font-size:20px;color:green'>". $skill . "</li>";
 }
 
-// object
+/**  Object  */
 class Person {
     public $name;
     public $email;    
@@ -39,9 +39,21 @@ class Person {
 
 
 
+/**  Resource */ 
+$file = fopen('demo.txt', 'r');
+// var_dump($file);
+
+
+echo "</br>";
+echo "</br>";
+
+/** Checking data type */
+$score = 80.0; // float
+
+$langs = ['Banlga', 'English', 'Arabia', 'China'];
 
 
 
-
+var_dump($langs);
 
 
