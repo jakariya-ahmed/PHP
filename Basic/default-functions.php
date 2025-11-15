@@ -135,6 +135,37 @@ $minVal = min($nums);
 echo "max number is $maxVal and min number is $minVal";
 
 
-/********
- * A
+/******** Array Functions 
+ * count(), array_push(), array_pop(), array_merge(), in_array(),
+ * array_key(), array_values(), sort(), resort();
  */
+
+
+// count()
+
+$arryCount = count($nums);
+
+echo "</br>";
+
+
+$products = [
+    ["name" => "T-shirt", "price" => 246, "category" => "Man"],
+    ["name" => "Jeans Pant", "price" => 3485, "category" => "Women"],
+];
+
+
+
+$pushNew = [
+    ["name" => "Smart Watch", "price" => 356, "category" => "Electronic"],
+    ["name" => "Yellow paijama", "price" => 595, "category" => "Baby"],
+];
+
+// push push new array end of the existing array 
+// array_push($products, $pushNew);
+$products[] = $pushNew; // add similar array without push_array
+
+echo print_r($products);
+echo "</br>";
+echo count($products);
+
+
