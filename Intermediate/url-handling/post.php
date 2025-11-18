@@ -39,6 +39,42 @@ if (!empty($errors)) {
 
 // Disply submtted data
 echo "username: $username <br/>";
-echo "username: $pwd <br/>";
-echo "username: $email <br/>";
+echo "password: $pwd <br/>";
+echo "email: $email <br/>";
+?>
+
+<!-- $_SERVER Method  -->
+
+<?php 
+// Generator Full Page Url by $_SERVER function 
+$http = "http://";
+$http_host = $_SERVER['HTTP_HOST']; // Host Name
+$request_url = $_SERVER['REQUEST_URI']; // Request Url
+$generated_url = $http . $http_host . $request_url; // Generate full rul
+
+
+$client_remote_ip = $_SERVER['REMOTE_ADDR']; // remote ip address
+$client_server_ip = $_SERVER['SERVER_ADDR']; // server ip address
+$client_browser = $_SERVER['HTTP_USER_AGENT']; // Browser name
+$scipt_name = $_SERVER['SCRIPT_NAME']; // file name
+$file_path = $_SERVER['SCRIPT_FILENAME'];  // Full Disk path
+
+// Real Visitor IP Address
+function getUserIP() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+}
+
+$ip_address = getUserIP();
+$ip = file_get_contents('https://api64.ipify.org?format=json');
+$ip = json_decode($ip)->ip;
+
+echo $ip;
+
+
 ?>
