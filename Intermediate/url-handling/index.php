@@ -9,31 +9,39 @@
 
 $url = "category=men&sort=249";
 
-
 ?>
 
 <a href="http://localhost/php/intermediate/url-handling/get.php?<?php echo $url ?>" style="border: 1px solid #ddd; padding:5px;">Product Info</a>
 
 <!-- Simple Search System   -->
 <?php 
-$query = htmlspecialchars($_GET['q']) ?? '';
+$query = $_GET['q'] ?? '';
+$senitizedQuery = htmlspecialchars($query);
+
 
 ?>
 
-<div style="width:300px; margin-top: 50px; background: #ddd; border: 1px solid f4f444; padding:20px;">
-    <form method="get" action="">
-        <input type="text" name="q" value="" placeholder="Search..." />
-        <button type="submit"> Search </button>
+<!-- Search Form  -->
+
+<div style="width: 250px; background:#ddd; padding: 20px; margin-top: 50px;">
+    <form action="" method="get">
+        <input style="height: 35px;" type="text" name="q" value="<?=  $senitizedQuery ?>" placeholder="Search...">
+        <button type="submit" style="border: 1px solid #363636ff; background: #e4b166ff; padding: 8px 16px;"> Search </button>
     </form>
-    <?php if (isset($_GET['q'])) :
-        $query = $_GET['q'];
-    ?> 
-    <p>Searching for: <strong><?= $query ?></strong></p>
+
+    <?php if ($query !== ""): ?>
+        <p style="color: #686868ff;"> Searching For :  <?=  $senitizedQuery ?></p>
     <?php endif; ?>
+
 </div>
 
 
+<?php 
+ // check type casting 
+ $product_id = isset($_GET['id']) ? (int) $_GET['id'] : 0; // Safe Inter 
+ $page = max(1, (int)($_GET['page'] ?? 1));
 
+?>
 
 
 
