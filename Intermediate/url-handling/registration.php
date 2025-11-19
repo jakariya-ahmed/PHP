@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         $username = $email = $mobile = $password = "";
 
         // Redirect to success.php
-
+        // include("success.php"); exit;
         //header("Refresh: 3; URL:success.php?success=1&msg=$successMsg"); 
         header("Location: success.php?success=1&msg=$successMsg"); // Standard way for redirect
         exit;
