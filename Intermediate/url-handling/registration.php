@@ -63,9 +63,27 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
     // If no erros show success 
     if (empty($erros)) {
         $successMsg = success("Registration is success !");
+
+        // Clear Input old Data
+        $username = $email = $mobile = $password = "";
+
+        // Redirect to success.php
+
+        //header("Refresh: 3; URL:success.php?success=1&msg=$successMsg"); 
+        header("Location: success.php?success=1&msg=$successMsg"); // Standard way for redirect
+        exit;
+        
+        /** Best Redirect by JS for time delaying 
+        echo "
+        <script>
+            setTimeout(function() {
+                window.location.href = 'success.php?success=1&msg=$successMsg';
+            }, 3000);
+        </script>
+        ";
+        */
     }
 
-    // echo "Registration Form Submitted !";
 }
 
 
@@ -73,25 +91,27 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 
 ?>
 
+<a href="<?= "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] ?>">Current Page </a>
+
 
 
 <!-- Registration Form  -->
 <div style="width: 250px; background:#ddd; padding: 20px; margin-top: 50px;">
     <?php if(!empty($successMsg)) : ?>
     <div style="background: #47fc5fff; align:center; font-size: 20px; padding: 8px;">
-        <?= $successMsg ?>
+        <?= $successMsg ."Redirecting..." ?>
     </div>
     <?php endif ?>
     <form method="POST" action="">
-        <input style="width: 100%; margin-top: 10px; height:30px" type="text" name="username" placeholder="Enter username">
+        <input style="width: 100%; margin-top: 10px; height:30px" type="text" name="username" value="<?= $username ?>" placeholder="Enter username">
         <span style="color:red"><?= $erros['username'] ?? '' ?></span>
-        <input style="width: 100%; margin-top: 10px; height:30px" type="email" name="email" placeholder="Enter Email">
+        <input style="width: 100%; margin-top: 10px; height:30px" type="email" name="email" value="<?= $email ?>" placeholder="Enter Email">
         <span style="color:red"><?= $erros['email'] ?? '' ?></span>
         
-        <input style="width: 100%; margin-top: 10px; height:30px" type="phone" name="mobile" placeholder="Enter Mobile">
+        <input style="width: 100%; margin-top: 10px; height:30px" type="phone" name="mobile" value="<?= $mobile ?>" placeholder="Enter Mobile">
         <span style="color:red"><?= $erros['mobile'] ?? '' ?></span><br>
         
-        <input style="width: 100%; margin-top: 10px; height:30px" type="password" name="password" placeholder="Enter password">
+        <input style="width: 100%; margin-top: 10px; height:30px" type="password" name="password" value="" placeholder="Enter password">
         <span style="color:red"><?= $erros['password'] ?? '' ?></span><br>
         <button type="submit"  style="margin-top: 10px; border: 1px solid #363636ff; background: #e4b166ff; padding: 8px 16px;">Login</button>
     </form>
