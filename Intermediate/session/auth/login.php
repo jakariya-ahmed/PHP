@@ -61,7 +61,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div style="position:absolute;width: 250px; background:#ddd; 
-    padding: 20px; margin-top: 50px; top: 50%; left: 50%; transform: translate(-50%, -50%)
+    padding: 20px; top: 50%; left: 50%; transform: translate(-50%, -50%)
     ">
     <h2> Login </h2>
     <?php if (!empty($errorMsg)) : ?>
