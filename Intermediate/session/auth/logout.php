@@ -1,8 +1,16 @@
 <?php 
+/**
+ * Session Start
+ */
+
 session_start();
-// Logout System
+
+// Unset the session
 session_unset();
+
+// Destroy the session
 session_destroy();
-header('Location: login.php');
-exit;
-?>
+
+// Redirect to login.php
+header("Location: login.php");
+exit();

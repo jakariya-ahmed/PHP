@@ -1,81 +1,103 @@
 <?php 
+/**
+ * Session Start()
+ */
 
-// Login System with Session
 session_start();
-if (isset($_SESSION['username'])) {
-    header('Location: ../dashboard.php');
-    exit;
+
+/**
+ * If user already logged in redirect to dashboard
+ */
+if (isset($_SESSION['logged_in'])) {
+    header("Location: ../dashboard.php");
+    exit();
 }
 
-$errors = [];
-$errorMsg = "";
+$errors = [
+    'username' => "",
+    'password' => "",
+    'login' => "",
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $userName = trim($_POST['username']);
-    $pwd = trim($_POST['password']);
+];
+// Store null input value for input data preserving
+$username = "";
+$password = "";
 
-    // check username validation
-    if (empty($userName)) {
-        $errors['username'] = "username is required";
-    } else {
-        if (!preg_match("/^[a-zA-Z]+$/", $userName)) {
-            $errors['username'] = "Only letters are allowed in username";
-        }
+/**
+ * Dynamically retrive form database when used Database
+ * Staic Credentials 
+ */
+
+$correctUsername = "admin";
+$correctPassword = "@123456";
+
+/**
+ * handle login form submit data
+ */
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // trim inputs 
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    // Input fields valdiation
+    if (empty($_POST['username'])) {
+        $errors['username'] = "Username is required";
     }
 
-    // check password validation
-    if (empty($pwd)) {
+    if (empty($_POST['password'])) {
         $errors['password'] = "Password is required";
-    } else {
-        if (strlen($pwd) < 5) {
-            $errors['password'] = "Password must be at least 6 characters";
-        }
     }
 
-    // If no errors , set sesstion and redirect ot dashboard
-    if (empty($errors)) {
-        // check username & password
-        if ($userName === "admin" && $pwd === "admin123") {
-            // set session variables
-            $_SESSION['username'] = $userName;
-            $_SESSION['user_id'] = uniqid('', true);
+    // Login check 
+    if (empty($errors['username']) && empty($errors['password'])) {
+        // check correct credentials 
+        if ($username === $correctUsername && $password === $correctPassword) {
             
-            // Regenerate session ID to prevent session fixation attacks
-            session_regenerate_id(true);
-
-            // Reidrect ot dashboard
+            // Regenrate session id
+            session_regenerate_id();
+            
+            // Store data in session
+            $_SESSION['logged_in'] = true;
+            $_SESSION['username'] = $username;
+            
+            // Redirect to Dashboard.php
             header("Location: ../dashboard.php");
-            exit;
-
-        } else {
-            $errorMsg = "Invalid username or password";
+            exit();
         }
+    } else {
+        // $errors['login'] = "Invalid username or password";
     }
-
 
 }
-
-
-
 
 ?>
+
+
 
 <div style="position:absolute;width: 250px; background:#ddd; 
     padding: 20px; top: 50%; left: 50%; transform: translate(-50%, -50%)
     ">
     <h2> Login </h2>
-    <?php if (!empty($errorMsg)) : ?>
+       <!-- <?php if($errors['login']) :  ?>
         <div style="margin-bottom: 10px;background: #fc6247ff;color: #fff; font-size: 16px; padding: 8px;">
-            <span><?= $errorMsg ?></span>
+            <span><?= $errors['login'] ?></span>
         </div>
-    <?php endif ?>
-
+        <?php endif ?>
+       --> 
     <form action="" method="POST">
-        <input style="width: 100%; margin-top: 10px; height:30px" type="text" name="username" placeholder="Enter username">
-        <span style="color:red; display:block;"><?= $errors['username'] ?? '' ?></span>
-        <input style="width: 100%; margin-top: 10px; height:30px" type="password" name="password" placeholder="*******">
-        <span style="color:red; display:block;"><?= $errors['password'] ?? '' ?></span>
+        <input style="width: 100%; margin-top: 10px; height:30px" 
+        type="text" name="username"
+        value="<?= htmlspecialchars($username) ?>" 
+        placeholder="Enter username">
+        <span style="color:red; display:block;"><?= $errors['username'] ?></span>
+        <input style="width: 100%; margin-top: 10px; height:30px" 
+        type="password" name="password" 
+        value="<?= htmlspecialchars($password) ?>"
+        placeholder="*******">
+        <span style="color:red; display:block;"> <?= $errors['password'] ?> </span>
         <button type="submit"  style="margin-top: 10px; border: 1px solid #363636ff; background: #e4b166ff; padding: 8px 16px;">Login</button>
     </form>
 </div>
+
 
