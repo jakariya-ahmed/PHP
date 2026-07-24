@@ -1,3 +1,4 @@
+<?php declare(strict_types = 1); ?>
 <!--
 ============================== 1. Array Information =======================
 count() – Count array elements
@@ -150,11 +151,13 @@ array_multisort()
 
 <?php
 
+
 $fruits = ['Apple', 'Banana', 'orange'];
 
 /**
  * Associative Array
  */
+
 
 $user = [
     "id" => 1,
@@ -172,33 +175,74 @@ $user = [
 
 $users = [
     [
+        "id" => 101,
         "name" => "Ahmed Ali",
         "email" => "ali@gmail.com",
         "designation" => "Desigener",
         "Status" => "active",
     ],
     [
+        "id" => 102,
         "name" => "Hussain Ahmed",
         "email" => "hussain@gmail.com",
         "designation" => "developer",
         "Status" => "active",
     ],
     [
+        "id" => 103,
         "name" => "Jakariya",
         "email" => "jek@gmail.com",
         "designation" => "Engineer",
         "Status" => "active",
     ],
     [
+        "id" => 104,
         "name" => "Jaffor",
         "email" => "jaffor@gmail.com",
         "designation" => "Desigener",
         "Status" => "inactive",
     ],
     [
+        "id" => 105,
         "name" => "Mahmud alom",
         "email" => "alom@gmail.com",
         "designation" => "Marketing Expert",
+        "Status" => "active",
+    ],
+];
+
+/**
+ * Products Retrive form database
+ * */
+
+
+$products = [
+    [
+        "id" => 101,
+        "name" => "Men Black T-shirt",
+        "price" => 520,
+        "color" => "black",
+        "Status" => "active",
+    ],
+    [
+        "id" => 101,
+        "name" => "Men jeans pant",
+        "price" => 2050,
+        "color" => "black",
+        "Status" => "active",
+    ],
+    [
+        "id" => 101,
+        "name" => "Women royal Watc",
+        "price" => 5020,
+        "color" => "white",
+        "Status" => "active",
+    ],
+    [
+        "id" => 101,
+        "name" => "Women T-shirt white color",
+        "price" => 520,
+        "color" => "white",
         "Status" => "active",
     ],
 ];
@@ -229,6 +273,8 @@ $cart = [
     ],
 ];
 
+
+$numbers = ['100', '200', '300', '400', '500'];
 /**
  * ------------------------------------------------------------
  * Calculate Product Count
@@ -247,6 +293,44 @@ if ($cartProductCount > 0) {
         echo "</pre>";
     }
 }
+
+/*
+|--------------------------------------------------------------------------
+| Extract Employee Email Addresses
+|--------------------------------------------------------------------------
+|
+| Database queries often return an array of associative arrays.
+| We only need the email addresses to send a company newsletter.
+|
+*/
+
+$employees = [
+    [
+        "id" => 1,
+        "name" => "John",
+        "email" => "john@company.com",
+        "department" => "HR"
+    ],
+    [
+        "id" => 2,
+        "name" => "Alice",
+        "email" => "alice@company.com",
+        "department" => "IT"
+    ],
+    [
+        "id" => 3,
+        "name" => "David",
+        "email" => "david@company.com",
+        "department" => "Finance"
+    ],
+    [
+        "id" => 4,
+        "name" => "Smith",
+        "email" => "smit@company.com",
+        "department" => "Marketing"
+    ],
+];
+
 
 /**
  * -------------------------------------------------------------
@@ -364,19 +448,161 @@ $tourGallery = array_pad($tourGallery, 5, "placeolder.jpg");
  * ------------------------------------------------------------
  * Searching Array Functions 
  * ------------------------------------------------------------
- * in_array() -> checks whether a valude exists in an array
+ * in_array() -> checks whether a valude exists in an array and return true/false
  * array_search() -> Find the key/index of a value
  * array_column() -> Extract values from a specific column of a multidimesioan array
  * 
  */
 
+/**
+ * in_array(value, array, strict)
+ * 
+ */
+
+$inArray = in_array("Mango", $fruits);
+$strictMode = in_array(500, $numbers, true );
+
+
+/**
+ * -------------------------------------------------
+ * Extract The user email address
+ * -------------------------------------------------
+ * Database queries often return an array of associative arrays.
+ * We only need the email address to send a company newsletter.
+ * 
+ */
+
+$userEmails = array_column($users, "email");
+
+/**
+ * -------------------------------------------------
+ * Remove user by using array_search() functions
+ * -------------------------------------------------
+ */
+
+$userIdToRemove = 104;
+
+/**
+ * -------------------------------------------------
+ * Locate User Posistion
+ * -------------------------------------------------
+ * 
+ * array_search() only works with one-dimensional arrays.
+ * Extract the `id` column first, ten search within it.
+ * 
+ */
+
+$userIds = array_column($users, 'id');
+/**
+ * Extract user index from array of userIds
+ */
+$userIndex = array_search($userIdToRemove, $userIds, true);
+
+/**
+ * Remove User
+ * 
+ * */
+
+if ($userIndex !== false) {
+    // unset($users[$userIndex]);
+    // Reindex numeric keys after removal.
+    $users = array_values($users);
+}
 
 
 
+/**
+ * ------------------------------------------------------
+ * Find a employee for promotion
+ * ------------------------------------------------------
+ * Employee Id
+ */
+$employeeId = 2;
+
+/**
+ * Find employee ids
+ * 
+ */
+
+$employeeIds = array_column($employees, "id");
+
+/**
+ * Find employee index from the ids
+ */
+
+$employeeIndex = array_search($employeeId, $employeeIds, true);
+
+if ($employeeIndex !== false) {
+    $employees[$employeeIndex]["designation"] = "Senior Engineer";
+    // $employees[$employeeIndex]["Salary"] = 75000;
+}
+
+
+/**
+ * ------------------------------------------------------------
+ * Transformation Array Functions 
+ * array_map(), array_filter(), array_reduce(), array_walk()
+ * ------------------------------------------------------------
+ * */
+
+/**
+ * ------------------------------------------------------------
+ * array_map() -> is a callback function and return new tranformated array
+ * ------------------------------------------------------------
+ * Transform every item and return new modified array
+ * 
+ */
+
+
+$addSalary = array_map(function ($employee) {
+    /**
+     * Add Salary elememnt in employees array
+     */
+    $employee["salary"] = 45000;
+
+    $employee['salary'] *= 1.10;
+
+    return $employee;
+
+} , $employees);
+
+/**
+ * Hide Sensitive Information
+ */
+
+$withoutUseEmailData = array_map(function ($user) {
+    unset($user['email']);
+    return $user;
+}, $users);
+
+
+/**
+ * Retrive all Active users
+ */
+
+$activeUsers  = array_filter($users, function ($user) {
+    return $user['Status'] === 'active';
+});
+
+/**
+ * Filter all expensive products
+ */
+
+$expensiveProducts = array_filter($products, function ($product) {
+    return $product["price"] > 1000;
+});
 
 echo "<pre>";
-print_r($tourGallery);
+print_r($products);
 echo "</pre>";
+
+
+echo "Mutated Result:";
+
+echo "<pre>";
+print_r($expensiveProducts);
+echo "</pre>";
+
 
 
 
