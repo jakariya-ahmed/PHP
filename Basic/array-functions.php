@@ -650,15 +650,19 @@ $productStock = [
 /**
  * ksort() -> sort an associative array by key
  * asort() => sorts an associative array by value while preserving keys.
+ * usort() => sorting by key in multidimension associative array
  */
 
 // asort($productStock);
 
-ksort($productStock);
+// ksort($productStock);
+
+
+usort($products, fn($a, $b) =>  $a["price"] <=> $b["price"]);
 
 
 echo "<pre>";
-print_r($productStock);
+print_r($products);
 echo "</pre>";
 
 
