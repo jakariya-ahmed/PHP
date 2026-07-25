@@ -222,6 +222,7 @@ $products = [
         "name" => "Men Black T-shirt",
         "price" => 520,
         "color" => "black",
+        "qty" => 2,
         "Status" => "active",
     ],
     [
@@ -229,6 +230,7 @@ $products = [
         "name" => "Men jeans pant",
         "price" => 2050,
         "color" => "black",
+        "qty" => 1,
         "Status" => "active",
     ],
     [
@@ -236,6 +238,7 @@ $products = [
         "name" => "Women royal Watc",
         "price" => 5020,
         "color" => "white",
+        "qty" => 2,
         "Status" => "active",
     ],
     [
@@ -243,6 +246,7 @@ $products = [
         "name" => "Women T-shirt white color",
         "price" => 520,
         "color" => "white",
+        "qty" => 4,
         "Status" => "active",
     ],
 ];
@@ -309,25 +313,29 @@ $employees = [
         "id" => 1,
         "name" => "John",
         "email" => "john@company.com",
-        "department" => "HR"
+        "department" => "HR",
+        "salary" => 20000
     ],
     [
         "id" => 2,
         "name" => "Alice",
         "email" => "alice@company.com",
-        "department" => "IT"
+        "department" => "IT",
+        "salary" => 30000
     ],
     [
         "id" => 3,
         "name" => "David",
         "email" => "david@company.com",
-        "department" => "Finance"
+        "department" => "Finance",
+        "salary" => 35000
     ],
     [
         "id" => 4,
         "name" => "Smith",
         "email" => "smit@company.com",
-        "department" => "Marketing"
+        "department" => "Marketing",
+        "salary" => 15000
     ],
 ];
 
@@ -592,8 +600,65 @@ $expensiveProducts = array_filter($products, function ($product) {
     return $product["price"] > 1000;
 });
 
+
+/**
+ * ----------------------------------------------------------------
+ * arr_reduce() -> combine many values into one final value
+ * ----------------------------------------------------------------
+ * array_reduce($array, $callback, $initial_value)
+ * Calculate product total price 
+ */
+$totalPrice = array_reduce($products, function($carry, $product) {
+    return $carry + $product["price"];
+}, 0);
+
+/**
+ * Calculate total employees salary
+ */
+
+$totla_salary = array_reduce($employees, function ($carry, $employee) {
+    return $carry + $employee["salary"];
+}, 0);
+
+/**
+ * ----------------------------------------------------------------
+ * array_walk() -> modify existing array 
+ * Example: 10% discount on all products
+ * 
+ */
+array_walk($products, function(&$product) {
+    
+    $product["discount_price"] = $product["price"] * 0.90;
+    $product["discount_amount"] = $product["price"] - $product["discount_price"];
+});
+
+// array_walk($products, fn(&$product) => $product['price'] *= 0.90);
+
+
+/**
+ * ----------------------------------------------------------------
+ * arr_reduce() -> combine many values into one final value
+ * ----------------------------------------------------------------
+ **/
+
+$productStock = [
+    "laptop" => 15,
+    "Mouse" => 10,
+    "Keyboard" => 20,
+];
+
+/**
+ * ksort() -> sort an associative array by key
+ * asort() => sorts an associative array by value while preserving keys.
+ */
+
+// asort($productStock);
+
+ksort($productStock);
+
+
 echo "<pre>";
-print_r($products);
+print_r($productStock);
 echo "</pre>";
 
 
