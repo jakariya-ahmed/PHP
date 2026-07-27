@@ -88,9 +88,23 @@ Class RolePermission {
     public const ROLE = "Admin";
 }
 
-echo RolePermission::ROLE;
-echo APP::VERSION;
-echo APP::APP_NAME;
+// echo App::APP_NAME;
+// echo App::VERSION;
+
+
+
+/** Utility Methods in Static */
+class Math {
+    public static function add(int $a, int $b): int {
+        return $a + $b;
+    }
+
+}
+
+
+
+echo Math::add(20, 30);
+
 
 
 
