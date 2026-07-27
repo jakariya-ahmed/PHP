@@ -1,4 +1,16 @@
 /* Reset */
+:root {
+      --primary-color: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --border-color: #d1d5db;
+      --readonly-bg: #e5e7eb;
+      --radius: 8px;
+    }
+    
 * {
     margin: 0;
     padding: 0;

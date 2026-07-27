@@ -658,20 +658,36 @@ $productStock = [
 // ksort($productStock);
 
 
-usort($products, fn($a, $b) =>  $a["price"] <=> $b["price"]);
+// usort($products, fn($a, $b) =>  $a["price"] <=> $b["price"]);
 
+
+
+/**
+ * ----------------------------------------------------------------
+ * Merge & Combine methods
+ * ----------------------------------------------------------------
+ * array_marge() -> marge two different array
+ * array_replace() -> replaces first array values when the keys match of second values
+ * 
+ **/
+
+$margedArray = array_merge($employees, $products);
+
+$updatedEmployees = [
+    "mobile" => 48494994,
+    "country" => "Banglades",
+];
+
+$updateData = array_replace($employees, $updatedEmployees);
 
 echo "<pre>";
-print_r($products);
+print_r($employees);
 echo "</pre>";
 
-
-echo "Mutated Result:";
-
+echo "Mutated Data:";
 echo "<pre>";
-print_r($expensiveProducts);
+print_r($updateData);
 echo "</pre>";
-
 
 
 

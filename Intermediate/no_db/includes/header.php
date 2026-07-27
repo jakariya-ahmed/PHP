@@ -2,19 +2,25 @@
 
 require_once __DIR__ . '/../auth/auth.php';
 require_once __DIR__ . '/../config/app.php';
+
+$pageTitle = $pageTitle ?? "Demo Project";
+$pageCss = $pageCss ?? '';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $pageTitle ?? 'Admin Dashboard' ?></title>
+    <title><?= htmlspecialchars($pageTitle) ?? 'Admin Dashboard' ?></title>
    <!-- Global CSS -->
     <link rel="stylesheet" href="/PHP/Intermediate/no_db/assets/css/style.css">
-    <?php if (isset($pageStyle)) : ?>
-        <link rel="stylesheet" href="style.css">
+    <?php if (!empty($pageCss)) : ?>
+        <link rel="stylesheet" 
+        href="<?= APP_URL ?>/assets/css/<?= htmlspecialchars($pageCss); 
+        ?>">
     <?php endif ?>
-
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <style> 
 .menu {
     background-color: #faf7f7;
