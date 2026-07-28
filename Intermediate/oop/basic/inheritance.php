@@ -59,7 +59,8 @@ class Attendence extends Student {
     }
 
     public function login(): void {
-        // parent::registration();
+        /** Overide the Parent method call */
+        parent::registration();
         echo "Teacher Logged In";
     }
 
