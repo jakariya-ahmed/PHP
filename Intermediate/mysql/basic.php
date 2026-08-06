@@ -76,25 +76,46 @@ HAVING group_condition ORDER BY AGGREGATE_FUNCTION(another_column) DESC;
 
 
 // Query Executed:
-SELECT department, SUM(amount) AS total_sales, FROM sales 
-GROUP BY department
-HAVING SUM(amount) > 400;
-
 SELECT department, SUM(amount) AS total_sales, FROM sales
-GROUP BY department HAVING SUM(amount) > 400;
+GROUP BY department HAVING SUM(amount) > 500 DESC;
+
+//-- WRONG: WHERE runs before GROUP BY and cannot process SUM()!
+SELECT customer_id, SUM(amount) FROM orders
+WHERE SUM(amount) > 1000 GROUP BY customer_id;
+//-- CORRECT: Use HAVING to filter aggregate results after grouping
+SELECT customer_id, SUM(amount) FROM orders
+GROUP BY customer_id HAVING SUM(amount) > 1000;
+
+//-- BEST PRACTICE: Filter raw rows early with WHERE before grouping
+SELECT category, COUNT(*) AS active_products FROM products WHERE status = 'Active'
+GROUP BY category;
+
+// Real Project Task
+
+SELECT category, SUM(quantity) AS total_qty_sold,
+    ROUND(SUM(price * quantity), 2) AS total_sales,
+    COUNT(*) AS total_line_items
+FROM order_items
+GROUP BY category
+HAVING SUM(price * quantity) > 1000
+ORDER BY total_sales DESC;
 
 
 
+/**----------------------------  Phase 5 — Joins ----------------------------   */
+// Syntax:
+SELECT T1.column_name, t2.column_name FROM table1 t1
+JOIN table2 t2 ON t1.shared_id = t2.shared_id;
+
+// Customer and Order tables inner join
+SELECT customers.customer_name, orders.order_id, orders.amount
+FROM customers INNER JOIN orders 
+ON customers.customer_id = orders.customer_id;
 
 
-
-
-
-
-
-
-
-
+SELECT customers.customer_name, orders.order_id, orders.amount
+FROM customers INNER JOIN orders
+ON customers.customer_id = orders.customer_id;
 
 
 
