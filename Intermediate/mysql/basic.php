@@ -117,10 +117,35 @@ SELECT customers.customer_name, orders.order_id, orders.amount
 FROM customers INNER JOIN orders
 ON customers.customer_id = orders.customer_id;
 
+// left join
+SELECT 
+    customers.customer_name,
+    orders.order_id,
+    orders.amount
+FROM customers LEFT JOIN orders 
+ON customers.customer_id = orders.customer_id;
 
+// right join
+SELECT
+c.customer_name,
+o.order_id,
+o.amount
+FROM customers c RIGHT JOIN orders o
+ON c.customer_id = o.customer_id;
 
+// full outer join
+SELECT 
+c.customer_name,
+o.order_id, 
+o.amount
+FROM customers c FULL OUTER JOIN orders o
+ON c.customer_id = o.customer_id;
 
-
+// Cross JOin
+SELECT
+colors.color_name,
+sizes.size_name
+FROM colors CROSS JOIN sizes;
 
 
 
